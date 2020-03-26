@@ -3,12 +3,6 @@ provider "aws" {
     profile = "Administrator"
 }
 
-variable "server_port" {
-    description = "The port the server will use for HTTP requests"
-    type = number
-    default = 8080
-
-}
 
 data "aws_availability_zones" "all" {
 
@@ -104,8 +98,5 @@ resource "aws_elb" "example" {
 }
 
 
-output "clb_dns_name" {
-    value = aws_elb.example.dns_name
-    description = "The domain name of the load balancer"
-}
+
 
