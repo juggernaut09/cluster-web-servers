@@ -54,9 +54,7 @@ resource "aws_autoscaling_group" "example"{
 
 
 resource "aws_security_group" "elb_sg" {
-
     name = "terraform-example-elb-sg"
-
     #Allow all outbound
     egress {
         from_port = 0
@@ -64,7 +62,6 @@ resource "aws_security_group" "elb_sg" {
         protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
     }
-
     # Inbound HTTP from anywhere
     ingress {
         from_port = 80
@@ -97,6 +94,18 @@ resource "aws_elb" "example" {
     }
 }
 
+
+terraform {
+    backend "s3" {
+        bucket = "terraform-up-and-running-state-4567"
+        key = "global/s3/terraform.tfstate"
+        region = "us-east-2"
+
+        #DynamoDB table name!
+        dynamodb_table = "terraform-up-and-running-locks"
+        encrypt        = true
+    }
+}
 
 
 
